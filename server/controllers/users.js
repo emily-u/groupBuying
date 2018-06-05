@@ -2,6 +2,8 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 const UserInfo = mongoose.model("UserInfo");
+const Plan = mongoose.model("Plan");
+const Group = mongoose.model("Group");
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -90,6 +92,69 @@ module.exports = {
         })
       }
     })
+  },
+
+  login: (req, res) => {
+    User.findOne({email: req.body.email},(err, login_user) => {
+      console.log('req.body.email: ', req.body.email);
+      if(err){
+        console.log("err from login", err);
+      }else{
+        if(login_user === null){
+          res.json({error: "Your Email is invalid, please try again."})
+        }else if(login_user.activated == false){
+          res.json({error: "Please activate your email by Email.", errorCode:404})
+        }else{
+          UserInfo.findOne({userId:login_user._id}, (err, userinfo) => {
+            if(err){
+              console.log("user info err", err);
+            }else{
+              bcrypt.compare(req.body.password, userinfo.password, (err, resp) => {
+                if(resp === true){
+                  res.json(login_user)
+                }else{
+                  res.json({error: "Your password is invalid. Plesse try again"})
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  createPlan:(req, res) => {
+    User.findOne({_id: req.params.id }, (err, user) => {
+      console.log("createPlan in users",req.params.id);
+      let newplan = new Plan({
+        company: req.body.company,
+        costPerMonth: req.body.costPerMonth,
+        line: req.body.line,
+        withContract: req.body.withContract,
+        description: req.body.description,
+      });
+      newplan.createdBy = user._id;
+      newplan.save((err) => {
+        if(err){
+          console.log(err);
+          res.json('can not save user');
+        }else{
+          res.json({success: "success"});
+        }
+      })
+    })
+
+  },
+
+  getPlans:(req, res) => {
+    Plan.find({}, function(err, results){
+      if(err){
+        res.json({message:"error"});
+      }else{
+        res.json(results);
+      }
+    })
+
   },
 
   // blank method

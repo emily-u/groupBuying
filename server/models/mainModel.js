@@ -27,9 +27,11 @@ var PlanSchema = new mongoose.Schema({
     company: { type: String, required: true },
     costPerMonth: { type: Number, required: true },
     line: { type: Number, required: true },
-    needContract: { type: Boolean, required: true },
+    withContract: { type: Boolean, required: true },
     description: { type: String, required: false },
-    joined_group: [{ type: Schema.Types.ObjectId, ref: "Group" }],    
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true}, 
+    joined_group: [{ type: Schema.Types.ObjectId, ref: "Group" }],   
+    approved: { type: Boolean, default:false} 
 },
 { timestamps: true },
 );
@@ -38,7 +40,7 @@ var Plan = mongoose.model("Plan", PlanSchema);
 
 var GroupSchema = new mongoose.Schema({
     user: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    plan: [{ type: Schema.Types.ObjectId, ref: "Plan" }],
+    plan: { type: Schema.Types.ObjectId, ref: "Plan" },
 },
 { timestamps: true },);
 var Group = mongoose.model("Group", GroupSchema);

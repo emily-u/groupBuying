@@ -1,3 +1,34 @@
-<p>
-  show works!
-</p>
+
+
+<section class="" id="showAllPlans">
+    <div>
+        <label for="sort-by-select">Sort by:</label>
+        <button class="btn">Best Selling</button>
+        <button class="btn">Price Low to High</button>
+        <button class="btn">Popularity</button>
+      </div>
+  <!-- <div class="box" *ngFor="let t of plans">
+    <h1 class="sort">{{t.company}}</h1>
+    <h4 class="sort price">${{t.costPerMonth}}/mo</h4>
+    <div class="sort">
+      <i class="fas fa-user-check fa-2x"></i>
+      <i class="fas fa-user-check fa-2x"></i>
+      <i class="far fa-user fa-2x"></i>
+      <i class="far fa-user fa-2x"></i>
+      <i class="far fa-user fa-2x"></i>
+    </div>
+    <h4 class="sort">{{t.description}}</h4>
+    <a href="" class="sort btn">Join Now</a>
+  </div> -->
+
+  <table class="box" *ngFor="let t of plans">
+    <tr>
+      <th><h1 class="sort">{{t.company}}</h1></th>
+      <th><h4 class="sort price">${{t.costPerMonth}}/mo</h4></th>
+      <div class="sort"></div>
+      <th><h4 class="sort">{{t.description}}</h4></th> 
+      <th><a href="" class="sort btn">Join Now</a></th>
+    </tr>
+</table>
+
+</section>

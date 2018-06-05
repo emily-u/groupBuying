@@ -1,9 +1,10 @@
 <div class="centered">
-  <form (submit)="userReg()">
+  <form (submit)="userReg()" role="form" #formRegis="ngForm">
     <h1>Register</h1>
     <label for="name">Name:</label>
     <br>
-    <input type="text" name="name" [(ngModel)]="user_reg.name" placeholder="name" #user_regname="ngModel" required minlength="3">
+    <input type="text" name="name" [(ngModel)]="user_reg.name" placeholder="name" #user_regname="ngModel" required minlength="3"
+      class="form-control">
     <br>
     <div class="alert alert-danger" *ngIf="user_regname.invalid && (user_regname.dirty || user_regname.touched)">
       <strong>User name is required and must be more than 3 characters.</strong>
@@ -12,35 +13,40 @@
 
     <label for="email">Email:</label>
     <br>
-    <input type="text" required pattern="[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]*\.([a-z]{2,4})" name="email" [(ngModel)]="user_reg.email" placeholder="email" #user_regemail="ngModel">
+    <input type="text" required pattern="[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]*\.([a-z]{2,4})" name="email" [(ngModel)]="user_reg.email"
+      placeholder="email" #user_regemail="ngModel" class="form-control">
     <div class="alert alert-danger" *ngIf="user_regemail.invalid && (user_regemail.dirty || user_regemail.touched)">
-        <strong>Email is required and must be valid.</strong>
-      </div>
-      <div class="alert alert-danger" *ngIf="err_message.email">
-          <strong>{{err_message.email}}</strong>
-        </div>
-      <br>
+      <strong>Email is required and must be valid.</strong>
+    </div>
+    <div class="alert alert-danger" *ngIf="err_message.email">
+      <strong>{{err_message.email}}</strong>
+    </div>
+    <br>
     <div class="form-group">
-      <label for="Password">Password</label>
-      <input type="password" class="form-control" id="password" required minlength="4" [(ngModel)]="user_reg.password" name="password" #user_regpassword="ngModel" placeholder="password">
+      <label for="Password">Password:</label>
+      <input type="password" class="form-control" id="password" required minlength="4" [(ngModel)]="user_reg.password" name="password"
+        #user_regpassword="ngModel" placeholder="password">
       <div class="alert alert-danger" *ngIf="user_regpassword.invalid && (user_regpassword.dirty || user_regpassword.touched)">
-          <strong>Password is required and must be more than 8 characters.</strong>
-        </div>
+        <strong>Password is required and must be more than 8 characters.</strong>
+      </div>
     </div>
     <div class="form-group">
       <label for="ConfirmPassword">Confirm Password</label>
-      <input type="password" class="form-control" id="confirmPassword" required [(ngModel)]="confirm_password"
-        name="confirmPassword" #confirmPassword="ngModel" placeholder="confirm password">
+      <input type="password" class="form-control" id="confirmPassword" required [(ngModel)]="confirm_password" name="confirmPassword"
+        #confirmPassword="ngModel" placeholder="confirm password">
       <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert alert-danger">
         <strong>Password is required.</strong>
       </div>
       <div *ngIf="(confirmPassword.dirty || confirmPassword.touched) && user_reg.password !== confirm_password" class="alert alert-danger">
-          <strong>Password mismatch.</strong>
-        </div>
+        <strong>Password mismatch.</strong>
+      </div>
     </div>
-    <br>
-    <input type="submit">
-    <p>Already a member ?</p>
-    <a [routerLink]="['/login']">Login</a>
+    <div class="modal-footer">
+      <button type="button" [routerLink]="['/']" class="btn btn-danger" data-dismiss="modal">Home</button>
+      <input type="submit" class="btn btn-success" [disabled]="formRegis.invalid">
+    </div>
+
+    <p>Already a member ? <a [routerLink]="['/login']">Login</a></p>
+    
   </form>
 </div>

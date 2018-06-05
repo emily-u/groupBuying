@@ -1,15 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ClassField } from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable()
 export class HttpService {
   currentUser = null;
 
+  loginstatus: BehaviorSubject<any[]> = new BehaviorSubject([]);
   checkLogin: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    
+    if (localStorage.currentUser !== undefined){
+      this.currentUser = JSON.parse(localStorage.currentUser);
+      // console.log(this.currentUser);
+      // console.log("service's constructor", this.currentUser);
+      const data = [{
+        user: this.currentUser,
+        mesg: null
+      }];
+      this.updateLoginStatus(data);
+    } else {
+      const data = [{
+        user: null,
+        mesg: null
+      }];
+      this.updateLoginStatus(data);
+    }
+  }
+
+  updateLoginStatus(data) {
+    this.loginstatus.next(data);
+  }
 
   regisUser(data, callback) {
     this._http.post('/register', data).subscribe(
@@ -26,8 +50,25 @@ export class HttpService {
     )
   }
 
+  createPlan(newplan, callback){
+    // console.log("createPlan in service", newplan);
+    this._http.post(`/newplan/${this.currentUser._id}`, newplan).subscribe(
+      (res: any) => {
+        console.log("from service create plan", res);
+        callback(res);
+        if (res == "success"){
+          console.log("succes create plan");
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+    
+      }
+
   getPendingUser(token, callback){
-    this._http.get(`activate_new/${token}`).subscribe((res: any) => {
+    this._http.get(`/activate_new/${token}`).subscribe((res: any) => {
       callback(res);
     },(err) => {
       console.log("getPendingUser err:", err);
@@ -35,18 +76,39 @@ export class HttpService {
   }
 
   login(userdata, callback){
-    this._http.post('/login',userdata).subscribe(
+    // console.log('userdata: ', userdata);
+    this._http.post('/login', userdata).subscribe(
       (res:any) => {
-        callback(res.json());
-        if(res.json().error === undefined){
-          this.currentUser = res.json();
-          localStorage.currentUser = JSON.stringify(res.json());
-
-          
+        console.log('res: ', res);
+        callback(res);
+        if(res.error === undefined){
+          this.currentUser = res;
+          localStorage.currentUser = JSON.stringify(res);
+          const data = [{
+            user: this.currentUser,
+            mesg: null
+          }];
+          this.updateLoginStatus(data);
         }
+      },
+      (err) => {
+        console.log('err from login service: ', err);
       }
     )
-
   }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+  }
+
+  getPlans(callback) {
+    this._http.get("/plans").subscribe(
+      (res) => {
+        callback(res);
+      }
+    )
+  }
+
+  
 }
 

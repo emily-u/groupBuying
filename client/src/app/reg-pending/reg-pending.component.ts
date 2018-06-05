@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class RegPendingComponent implements OnInit {
   user_log = {
     email: "",
-    password: ""
+    password: "",
   }
   user_name;
   error_message = {
@@ -24,7 +24,7 @@ export class RegPendingComponent implements OnInit {
 
   ngOnInit() {
     this._route.paramMap.subscribe(params => {
-      this._service.getPendingUser(params.get("tooken"), (res) => {
+      this._service.getPendingUser(params.get("token"), (res) => {
         this.user_name = res.user.name;
       })
     })

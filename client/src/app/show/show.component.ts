@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from './../http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show',
@@ -6,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show.component.css']
 })
 export class ShowComponent implements OnInit {
+  plans = {
+    company: '',
+    costPerMonth: '',
+    line: '',
+    withContract: '',
+    description: '',
+  }
 
-  constructor() { }
+  constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
+    this._service.getPlans((res) => {
+      this.plans = res;
+    })
   }
 
 }

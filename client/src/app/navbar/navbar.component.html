@@ -5,14 +5,26 @@
         <a href="#">Home</a>
       </li>
       <li>
-        <a href="#">About</a>
+        <a href="#" id="nav-about">About</a>
       </li>
       <li>
-        <a href="#">Plans</a>
+        <a href="#" id="nav-plans">Plans</a>
       </li>
       <li>
-        <a [routerLink]="['/login']">Login</a>
+        <a [routerLink]="['/add']" *ngIf="logged_user !== undefined">Create</a>
+        <a [routerLink]="['/login']" *ngIf="logged_user === undefined">Create</a>
+      </li>
+      <li>
+        <a [routerLink]="['/login']" *ngIf="logged_user === undefined">Login</a>
+        <a href="#" *ngIf="logged_user !== undefined" (click)="logout()">Logout</a>
       </li>
     </ul>
   </nav>
+
+
+<app-home></app-home>
+<app-show></app-show>
+<footer>
+  <p>Emily's project &copy; 2018</p>
+</footer>
 </div>

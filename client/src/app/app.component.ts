@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
     private _router: Router
   ) {}
   ngOnInit() {
-    this._route.params.subscribe((params: Params) => console.log(params['id']));
+    this._route.params.subscribe((params: Params) => console.log("from app component",params['id']));
   }
   goHome() {
     this._router.navigate(['/home']);
