@@ -151,6 +151,7 @@ module.exports = {
       if(err){
         res.json({message:"error"});
       }else{
+        console.log(results);
         res.json(results);
       }
     })

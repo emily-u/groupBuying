@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ClassField } from '@angular/compiler/src/output/output_ast';
+import { Http, Response } from '@angular/http';
+import 'rxjs/Rx';
+
 
 
 @Injectable()
@@ -11,7 +14,7 @@ export class HttpService {
   loginstatus: BehaviorSubject<any[]> = new BehaviorSubject([]);
   checkLogin: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: Http) {
     
     if (localStorage.currentUser !== undefined){
       this.currentUser = JSON.parse(localStorage.currentUser);
@@ -101,12 +104,10 @@ export class HttpService {
     localStorage.removeItem('currentUser');
   }
 
-  getPlans(callback) {
-    this._http.get("/plans").subscribe(
-      (res) => {
-        callback(res);
-      }
-    )
+  getPlans() {
+    return this._http.get("/plans")
+    .map(data => data.json())
+    .toPromise()
   }
 
   

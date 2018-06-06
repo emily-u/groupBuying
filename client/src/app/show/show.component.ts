@@ -15,13 +15,17 @@ export class ShowComponent implements OnInit {
     withContract: '',
     description: '',
   }
+  planList;
 
   constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
-    this._service.getPlans((res) => {
-      this.plans = res;
+    this._service.getPlans()
+    .then((plans)=>{
+      // console.log('plans: ', plans);
+      this.planList = plans;
     })
+    .catch(err=>{console.log("err: ", err);})
   }
 
 }

@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpService } from './http.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
@@ -35,7 +35,7 @@ import { RegPendingComponent } from './reg-pending/reg-pending.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpModule,
     FormsModule
   ],
   providers: [HttpService],
