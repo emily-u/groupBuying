@@ -6,11 +6,11 @@ declare var jquery: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-userdata',
+  templateUrl: './userdata.component.html',
+  styleUrls: ['./userdata.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class UserdataComponent implements OnInit {
   logged_user;
   user_log = {
     email: '',
@@ -28,19 +28,18 @@ export class NavbarComponent implements OnInit {
       // console.log('THIS.USER_LOG.EMAIL: ', this.user_log.email);
     }
 
-    $("#nav-about").click(function() {
+    $("#admin-nav-data").click(function() {
       $('html,body').animate({
-          scrollTop: $("#showAbout").offset().top},
+          scrollTop: $("#admin-data").offset().top},
           'slow');
   });
 
-    $("#nav-plans").click(function() {
+    $("#admin-nav-chart").click(function() {
       $('html,body').animate({
-          scrollTop: $("#showAllPlans").offset().top},
+          scrollTop: $("#admin-chart").offset().top},
           'slow');
   });
   }
-
   logout(){
     // console.log("logout button pressed", this.logged_user);
     this._service.logout();
@@ -52,5 +51,6 @@ export class NavbarComponent implements OnInit {
     this._service.updateLoginStatus(data);
     this._service.checkLogin.next(['logout']);
   }
-
 }
+
+

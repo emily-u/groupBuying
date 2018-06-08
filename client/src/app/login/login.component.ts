@@ -23,23 +23,25 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-  
-  login(){
-    this._service.login(this.user_log, (res)=>{
-      if(res.error == undefined){
-        this._service.checkLogin.next(['loged']);
-        this._router.navigate(['/'])
-      }else{
-        this.error_message.login = res.error;
-        if(res.errorCode != undefined){
-          this.error_message.code = res.errorCode;
+
+  login() {
+    this._service.login(this.user_log)
+      .subscribe(
+      (data) => {
+        if (data.error === undefined) {
+          // console.log(data);
+          this._service.checkLogin.next(['loged']);
+          if (data.isAdmin) {
+            this._router.navigate(['/admin'])
+          } else {
+            this._router.navigate(['/'])
+          }
+        }
+        else {
+          this.error_message.login = data.error;
         }
       }
-    });
-    this.user_log = {
-      email:'',
-      password:''
-    }
+      )
   }
 
 }

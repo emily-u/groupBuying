@@ -30,7 +30,7 @@ var PlanSchema = new mongoose.Schema({
     withContract: { type: Boolean, required: true },
     description: { type: String, required: false },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true}, 
-    joined_group: [{ type: Schema.Types.ObjectId, ref: "Group" }],   
+    joinedBy: [{ type: Schema.Types.ObjectId, ref: "Group" }],
     approved: { type: Boolean, default:false} 
 },
 { timestamps: true },

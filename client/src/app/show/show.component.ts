@@ -16,16 +16,41 @@ export class ShowComponent implements OnInit {
     description: '',
   }
   planList;
+  logged_user_id;
+  error_message = {
+    joinPlan: '',
+  };
 
   constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
     this._service.getPlans()
-    .then((plans)=>{
-      // console.log('plans: ', plans);
-      this.planList = plans;
-    })
-    .catch(err=>{console.log("err: ", err);})
+    .subscribe(
+      (planList)=>{ 
+        console.log('planList: ', planList[0]);
+        this.planList = planList },
+      (err)=>{ console.log(err); },
+      ()=>{  }
+      );
+
+      if (this._service.currentUser !== null) {
+        // console.log('this._service.currentUser: ', this._service.currentUser);
+        this.logged_user_id = this._service.currentUser._id;
+        console.log("logged_user_id", this.logged_user_id);
+      }
+  }
+
+  joinPlan(plan_id){
+    // console.log("joinPlan in ts",id);
+    this._service.joinPlan(this.logged_user_id, plan_id)
+    .subscribe(
+      (data)=>{ 
+        if(data){
+          console.log(data);
+        }
+       },
+      (err)=>{ this.error_message.joinPlan = err.error },
+    )
   }
 
 }

@@ -21,6 +21,10 @@ module.exports = function(app){
         users.createPlan(req, res);
     })
 
+    app.post("/joinplan/:user_id/:plan_id", function(req, res){
+        users.joinPlan(req, res);
+    })
+
     app.get("/plans", function(req, res){
         users.getPlans(req, res);
     })

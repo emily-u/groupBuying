@@ -16,8 +16,8 @@ export class AddComponent implements OnInit {
     withContract: '',
     description: '',
   };
-  err_message:'';
-  
+  err_message: '';
+
 
   constructor(private _service: HttpService, private _router: Router) { }
 
@@ -27,20 +27,22 @@ export class AddComponent implements OnInit {
   }
 
   createPlan() {
-    this._service.createPlan(this.newplan, (res) =>{
-      if(res.success === 'success'){
-      this._router.navigate(['/']);
-      this.newplan = {
-        company: '',
-        costPerMonth: '',
-        line: '',
-        withContract: '',
-        description: '',
-      }
-    }else{
-      this.err_message = res.error;
-    }}  
-    )
+    this._service.createPlan(this.newplan)
+      .subscribe(
+      (data) => {
+        if(data) {
+          this._router.navigate(['/']);
+          this.newplan = {
+                company: '',
+                costPerMonth: '',
+                line: '',
+                withContract: '',
+                description: '',
+              }
+        }
+      },
+      (err) => { this.err_message = err.error }
+      )
   }
 
 }

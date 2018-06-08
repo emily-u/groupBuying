@@ -18,22 +18,28 @@ export class RegisComponent implements OnInit {
     email: '',
   };
 
-  constructor(private _service: HttpService, private _router: Router) { }
-
-  userReg(){
-    this._service.regisUser(this.user_reg, (res) => {
-      if(res.success === 'register pending'){
-        this._router.navigate(['/checkEmail']);
-        this.user_reg = {
-          name: '',
-          email: '',
-          password: '',
-        }
-      }else {
-        this.err_message.email = res.error;
-      }
-    })
+  constructor(private _service: HttpService, private _router: Router) {
+    this.userReg();
   }
+
+  userReg() {
+    this._service.regisUser(this.user_reg)
+      .subscribe(
+      (data) => {
+        if (data) {
+          this._router.navigate(['/checkEmail']);
+          this.user_reg = {
+            name: '',
+            email: '',
+            password: '',
+          }
+        }
+      },
+      (err) => { this.err_message.email = err.error }
+      )
+  }
+
+
 
   ngOnInit() {
   }

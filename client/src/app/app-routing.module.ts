@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisComponent } from './regis/regis.component';
 import { CheckEmailComponent } from './check-email/check-email.component';
 import { RegPendingComponent } from './reg-pending/reg-pending.component';
+import { UserdataComponent } from './userdata/userdata.component';
 
 const routes: Routes = [
   { path: '',component: NavbarComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'edit',component: EditComponent },
   { path: 'home',component: HomeComponent },
   { path: 'show',component: ShowComponent },
+  { path: 'admin',component: UserdataComponent },
 ];
 
 @NgModule({

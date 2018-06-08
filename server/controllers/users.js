@@ -96,7 +96,7 @@ module.exports = {
 
   login: (req, res) => {
     User.findOne({email: req.body.email},(err, login_user) => {
-      console.log('req.body.email: ', req.body.email);
+      // console.log('req.body.email: ', login_user);
       if(err){
         console.log("err from login", err);
       }else{
@@ -143,7 +143,30 @@ module.exports = {
         }
       })
     })
-
+  },
+  
+  joinPlan:(req, res) => {
+    User.findOne({_id: req.params.user_id }, (err, user) => {
+      // console.log("joinPlan in users",req.params.id);
+      Plan.findOne({_id: req.params.plan_id}, (err, plan)=>{
+        // console.log(plan); 
+        if(err){
+          console.log(err);
+          res.json('can not save user');
+        }else{
+          plan.joinedBy = user._id;
+          plan.save((err) => {
+            if(err){
+              console.log(err);
+              res.json('can not save user to plan');
+            }else{
+              res.json({success: "success save plan"});
+            }
+          })
+          // res.json({success: "success"});
+        }
+      })    
+    })
   },
 
   getPlans:(req, res) => {
@@ -152,6 +175,7 @@ module.exports = {
         res.json({message:"error"});
       }else{
         console.log(results);
+        // if plan.line > plan.joinedBy
         res.json(results);
       }
     })

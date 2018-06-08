@@ -1,13 +1,11 @@
-
-
 <section class="" id="showAllPlans">
     <div>
         <label for="sort-by-select">Sort by:</label>
         <button class="btn">Best Selling</button>
         <button class="btn">Price Low to High</button>
         <button class="btn">Popularity</button>
-      </div>
-  <!-- <div class="box" *ngFor="let t of plans">
+    </div>
+    <!-- <div class="box" *ngFor="let t of plans">
     <h1 class="sort">{{t.company}}</h1>
     <h4 class="sort price">${{t.costPerMonth}}/mo</h4>
     <div class="sort">
@@ -21,14 +19,28 @@
     <a href="" class="sort btn">Join Now</a>
   </div> -->
 
-  <table class="box" *ngFor="let t of planList">
-    <tr>
-      <th><h1 class="sort">{{t.company}}</h1></th>
-      <th><h4 class="sort price">${{t.costPerMonth}}/mo</h4></th>
-      <div class="sort"></div>
-      <th><h4 class="sort">{{t.description}}</h4></th> 
-      <th><a href="" class="sort btn">Join Now</a></th>
-    </tr>
-</table>
+    <div class="box" *ngFor="let t of planList">
+        <div class="planForm">
+            <div class="planDetail">
+                <h2 class="sort">{{t.company}}</h2>
+            </div>
+            <div class="planDetail">
+                <h4 class="sort price">${{t.costPerMonth}}/mo</h4>
+            </div>
+            <div class="planDetail">
+                <div class="sort"></div>
+            </div>
+            <div class="planDetail">
+                <h4 class="sort">{{t.description}}</h4>
+            </div>
+            <div class="planDetail">
+                <button class="sort joinbtn" *ngIf="logged_user_id === t.createdBy">Created and joined</button>
+                <button class="sort joinbtn" *ngIf="logged_user_id !== t.createdBy && t.joinedBy===logged_user_id" (click)="joinPlan(t._id)">Join Now</button>
+                <button class="sort joinbtn" *ngIf="t.joinedBy==logged_user_id">Joined</button>
+                <button class="sort joinbtn" *ngIf="logged_user_id===undefined">Login and Join </button>
+                <!-- <button class="sort joinbtn" *ngIf="t.line>t.joinBy.length" >Activated</button> -->
+            </div>
+        </div>
+    </div>
 
 </section>

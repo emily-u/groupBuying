@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisComponent } from './regis/regis.component';
 import { CheckEmailComponent } from './check-email/check-email.component';
 import { RegPendingComponent } from './reg-pending/reg-pending.component';
+import { UserdataComponent } from './userdata/userdata.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RegPendingComponent } from './reg-pending/reg-pending.component';
     LoginComponent,
     RegisComponent,
     CheckEmailComponent,
-    RegPendingComponent
+    RegPendingComponent,
+    UserdataComponent
   ],
   imports: [
     BrowserModule,

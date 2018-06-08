@@ -18,8 +18,7 @@ export class HttpService {
     
     if (localStorage.currentUser !== undefined){
       this.currentUser = JSON.parse(localStorage.currentUser);
-      // console.log(this.currentUser);
-      // console.log("service's constructor", this.currentUser);
+      console.log("service's constructor", this.currentUser);
       const data = [{
         user: this.currentUser,
         mesg: null
@@ -38,66 +37,44 @@ export class HttpService {
     this.loginstatus.next(data);
   }
 
-  regisUser(data, callback) {
-    this._http.post('/register', data).subscribe(
-      (res: any) => {
-        console.log("from service register: ", res.success);
-        callback(res);
-        if (res.success == 'register pending') {
-          console.log("success register");
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
+  regisUser(data) {
+    return this._http.post('/register', data)
+    .map(res => res.json());
   }
 
-  createPlan(newplan, callback){
-    // console.log("createPlan in service", newplan);
-    this._http.post(`/newplan/${this.currentUser._id}`, newplan).subscribe(
-      (res: any) => {
-        console.log("from service create plan", res);
-        callback(res);
-        if (res == "success"){
-          console.log("succes create plan");
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-    
+  createPlan(newplan){
+    return this._http.post(`/newplan/${this.currentUser._id}`, newplan)
+    .map(res => res.json());
       }
 
-  getPendingUser(token, callback){
-    this._http.get(`/activate_new/${token}`).subscribe((res: any) => {
-      callback(res);
-    },(err) => {
-      console.log("getPendingUser err:", err);
+  joinPlan(user_id, plan_id){
+    return this._http.post(`/joinplan/${user_id}/${plan_id}`, {})
+    .map(res => res.json());
+  }
+      
+  getPendingUser(token){
+    return this._http.get(`/activate_new/${token}`)
+    .map(data => data.json())
+  }
+
+  login(userdata){
+    return this._http.post('/login', userdata)
+    .map((user) => {
+      console.log('user: ', user.json());
+      if(user.json().error === undefined){
+        this.currentUser = user.json();
+        localStorage.currentUser = JSON.stringify(user.json());
+        const data = [{
+          user: this.currentUser,
+          mesg: null
+        }];
+        this.updateLoginStatus(data);
+      }else{
+        console.log('error from login service: ', user.json());
+      }
+      return user.json();
+
     })
-  }
-
-  login(userdata, callback){
-    // console.log('userdata: ', userdata);
-    this._http.post('/login', userdata).subscribe(
-      (res:any) => {
-        console.log('res: ', res);
-        callback(res);
-        if(res.error === undefined){
-          this.currentUser = res;
-          localStorage.currentUser = JSON.stringify(res);
-          const data = [{
-            user: this.currentUser,
-            mesg: null
-          }];
-          this.updateLoginStatus(data);
-        }
-      },
-      (err) => {
-        console.log('err from login service: ', err);
-      }
-    )
   }
 
   logout() {
@@ -107,7 +84,6 @@ export class HttpService {
   getPlans() {
     return this._http.get("/plans")
     .map(data => data.json())
-    .toPromise()
   }
 
   
