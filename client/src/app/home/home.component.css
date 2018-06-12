@@ -121,6 +121,14 @@ img {
         text-align: center;
         margin: auto;
     }
+
+    .info li {
+        font-size: 1rem;
+    }
+
+    .info h1 {
+        font-size: 1.3rem;
+    }
 }
 
 @media(max-width: 500px) {

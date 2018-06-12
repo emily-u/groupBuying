@@ -12,7 +12,7 @@ export class ShowComponent implements OnInit {
     company: '',
     costPerMonth: '',
     line: '',
-    withContract: '',
+    // withContract: '',
     description: '',
   }
   planList;

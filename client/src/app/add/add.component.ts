@@ -13,7 +13,7 @@ export class AddComponent implements OnInit {
     company: '',
     costPerMonth: '',
     line: '',
-    withContract: '',
+    // withContract: '',
     description: '',
   };
   err_message: '';
@@ -36,7 +36,7 @@ export class AddComponent implements OnInit {
                 company: '',
                 costPerMonth: '',
                 line: '',
-                withContract: '',
+                // withContract: '',
                 description: '',
               }
         }

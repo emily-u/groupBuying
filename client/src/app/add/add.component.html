@@ -3,23 +3,25 @@
     <h1>Create a new groupbuying</h1>
     <div class="form-group">
       <label for="">Carrier</label>
-      <input type="text" class="form-control" placeholder="company" name="company" [(ngModel)]="newplan.company" #plan_company="ngModel" required>
+      <input type="text" class="form-control" placeholder="company" name="company" [(ngModel)]="newplan.company" #plan_company="ngModel"
+        required>
     </div>
     <div class="alert alert-danger" *ngIf="plan_company.invalid && (plan_company.dirty || plan_company.touched)">
-        <strong>Carrier is required.</strong>
-      </div>
+      <strong>Carrier is required.</strong>
+    </div>
 
     <div class="form-group">
       <label for="">Cost/month</label>
-      <input type="number" class="form-control" placeholder="cost/month" name="costPerMonth" [(ngModel)]="newplan.costPerMonth" #plan_cost="ngModel" required min="1">
+      <input type="number" class="form-control" placeholder="cost/month" name="costPerMonth" [(ngModel)]="newplan.costPerMonth"
+        #plan_cost="ngModel" required min="1">
     </div>
     <div class="alert alert-danger" *ngIf="plan_cost.invalid && (plan_cost.dirty || plan_cost.touched)">
-        <strong>Cost is required.</strong>
-      </div>
+      <strong>Cost is required.</strong>
+    </div>
 
     <div class="form-group">
-      <label for="">Line</label>
-      <select name="line" id="" selected="selected" [(ngModel)]="newplan.line" #plan_line="ngModel">
+      <label for="">Line</label><br>
+      <select class="custom-select" name="line" id="" selected="selected" [(ngModel)]="newplan.line" #plan_line="ngModel">
         <option value="2">2 lines</option>
         <option value="3">3 lines</option>
         <option value="4">4 lines</option>
@@ -27,18 +29,19 @@
       </select>
     </div>
     <div class="alert alert-danger" *ngIf="plan_line.pristine && (plan_line.dirty || plan_line.touched)">
-        <strong>Please pick the number of lines.</strong>
-      </div>
-    <div class="form-group">
-      <label for="">Need Contract ?</label><br>
+      <strong>Please pick the number of lines.</strong>
+    </div>
+    <!-- <div class="form-group">
+      <label for="">Need Contract ?</label>
+      <br>
       <select name="contract" [(ngModel)]="newplan.withContract" #plan_nc="ngModel">
         <option value=true>With Contract</option>
         <option value=false>Without Contract</option>
       </select>
-    </div>
-    <div class="alert alert-danger" *ngIf="plan_nc.pristine && (plan_nc.dirty || plan_nc.touched)">
-        <strong>Need Contract is required.</strong>
-      </div>
+    </div> -->
+    <!-- <div class="alert alert-danger" *ngIf="plan_nc.pristine && (plan_nc.dirty || plan_nc.touched)">
+      <strong>Need Contract is required.</strong>
+    </div> -->
 
     <div class="form-group">
       <label for="">Description</label>

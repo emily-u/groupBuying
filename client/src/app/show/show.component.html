@@ -1,14 +1,14 @@
 <section class="" id="showAllPlans">
-    <div>
+    <!-- <div>
         <label for="sort-by-select">Sort by:</label>
         <button class="btn">Best Selling</button>
         <button class="btn">Price Low to High</button>
         <button class="btn">Popularity</button>
-    </div>
+    </div> -->
 
     <div class="boxes" *ngFor="let t of planList">
         <div class="box">
-            <h2>{{t.company}}</h2>
+            <h4>{{t.company}}</h4>
         </div>
         <div class="box">
             <h4 class="price">${{t.costPerMonth}}/mo</h4>

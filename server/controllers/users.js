@@ -129,7 +129,7 @@ module.exports = {
         company: req.body.company,
         costPerMonth: req.body.costPerMonth,
         line: req.body.line,
-        withContract: req.body.withContract,
+        // withContract: req.body.withContract,
         description: req.body.description,
       });
       newplan.createdBy = user._id;

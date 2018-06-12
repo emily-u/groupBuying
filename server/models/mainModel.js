@@ -28,7 +28,7 @@ var PlanSchema = new mongoose.Schema({
     company: { type: String, required: true },
     costPerMonth: { type: Number, required: true },
     line: { type: Number, required: true },
-    withContract: { type: Boolean, required: true },
+    // withContract: { type: Boolean, required: true },
     description: { type: String, required: false },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true}, 
     joinedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],

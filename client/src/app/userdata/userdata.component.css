@@ -32,7 +32,7 @@ img {
 }
 
 .main-nav a {
-    background: var(--light);
+    background: var(--primary);
     display: block;
     text-decoration: none;
     padding: 0.8rem;
@@ -44,7 +44,7 @@ img {
 }
 
 .main-nav a:hover {
-    background: var(--primary);
+    background: var(--dark);
     color: var(--light);
 }
 
@@ -77,7 +77,7 @@ img {
 }
 
 .top-box {
-    background: var(--light);
+    background: var(--primary);
     display: grid;
     align-items: center;
     justify-items: center;
@@ -105,14 +105,14 @@ img {
  }
 
 .box {
-     background: var(--light);
+     background: var(--primary);
      text-align: center;
      padding: 1.5rem 2rem;
      box-shadow: var(--shadow);
  }
 
 .info {
-    background: var(--light);
+    background: var(--primary);
     box-shadow: var(--shadow);
     display: grid;    
     grid-gap: 30px;
