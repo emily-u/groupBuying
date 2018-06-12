@@ -52,6 +52,7 @@ export class UserdataComponent implements OnInit {
       this.planList_length = planList.length;
       // console.log("7",planList);
       let count1 = 0;
+      let user_joined_plan = 0;
       for(var i = 0; i<planList.length; i++){
         if(planList[i].completed == true){
           count1 += 1;
@@ -59,9 +60,10 @@ export class UserdataComponent implements OnInit {
         }
         this.completed_groups = count1;
         if(planList[i].joinedBy){
-          this.user_joined_plan += planList[i].joinedBy.length;
+          user_joined_plan += planList[i].joinedBy.length;
           // console.log("this.user_joined_plan",this.user_joined_plan);
         }
+        this.user_joined_plan = user_joined_plan;
       }
       
     },
@@ -76,6 +78,7 @@ export class UserdataComponent implements OnInit {
         this.planList_length = planList.length;
         // console.log("7",planList);
         let count = 0;
+        let user_joined_plan = 0;
         for(var i = 0; i<planList.length; i++){
           if(planList[i].completed == true){
             count += 1;
@@ -83,9 +86,10 @@ export class UserdataComponent implements OnInit {
           }
           this.completed_groups = count;
           if(planList[i].joinedBy){
-            this.user_joined_plan += planList[i].joinedBy.length;
+            user_joined_plan += planList[i].joinedBy.length;
             // console.log("this.user_joined_plan",this.user_joined_plan);
           }
+          this.user_joined_plan = user_joined_plan;
         }
         
       },
@@ -104,9 +108,9 @@ export class UserdataComponent implements OnInit {
 
   this._service.getCurrentUser(this.logged_user_id)
   .subscribe(
-    (currentUser)=>{
-      // console.log("2567", currentUser);
-      this.plans_created_by_user = currentUser.created_plan.length;
+    (user)=>{
+      // console.log("2567", user);
+      this.plans_created_by_user = user.created_plan.length;
     },
     (err)=>{console.log(err);}
   )
