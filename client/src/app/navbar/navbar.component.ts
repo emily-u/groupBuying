@@ -12,6 +12,7 @@ declare var $: any;
 })
 export class NavbarComponent implements OnInit {
   logged_user;
+  user_isAdmin;
   user_log = {
     email: '',
     password: ''
@@ -20,12 +21,16 @@ export class NavbarComponent implements OnInit {
   constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
+    
     if (this._service.currentUser !== null) {
       // console.log('this._service.currentUser: ', this._service.currentUser);
       this.logged_user = this._service.currentUser.name;
+      this.user_isAdmin = this._service.currentUser.isAdmin;
       this.user_log.email = this._service.currentUser.email;
       this.user_log.password = this._service.currentUser.password;
-      // console.log('THIS.USER_LOG.EMAIL: ', this.user_log.email);
+      this.user_log = this._service.currentUser;
+      // console.log('1121', this.user_log);
+      
     }
 
     $("#nav-about").click(function() {

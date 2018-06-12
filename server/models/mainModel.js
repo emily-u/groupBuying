@@ -9,7 +9,8 @@ var UserSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, required: true },
     activated: { type: Boolean, default: false },
     userInfo: { type: Schema.Types.ObjectId, ref: "UserInfo"},
-    joined_group: [{ type: Schema.Types.ObjectId, ref: "Group" }],    
+    joined_plan: [{ type: Schema.Types.ObjectId, ref: "Plan" }],
+    created_plan: [{ type: Schema.Types.ObjectId, ref: "Plan" }],
 },
   { timestamps: true },
 );
@@ -30,17 +31,17 @@ var PlanSchema = new mongoose.Schema({
     withContract: { type: Boolean, required: true },
     description: { type: String, required: false },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true}, 
-    joinedBy: [{ type: Schema.Types.ObjectId, ref: "Group" }],
-    approved: { type: Boolean, default:false} 
+    joinedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    completed: { type: Boolean, default: false } 
 },
 { timestamps: true },
 );
 var Plan = mongoose.model("Plan", PlanSchema);
 
 
-var GroupSchema = new mongoose.Schema({
-    user: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    plan: { type: Schema.Types.ObjectId, ref: "Plan" },
-},
-{ timestamps: true },);
-var Group = mongoose.model("Group", GroupSchema);
+// var GroupSchema = new mongoose.Schema({
+//     user: [{ type: Schema.Types.ObjectId, ref: "User" }],
+//     plan: { type: Schema.Types.ObjectId, ref: "Plan" },
+// },
+// { timestamps: true },);
+// var Group = mongoose.model("Group", GroupSchema);

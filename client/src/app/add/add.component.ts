@@ -23,7 +23,7 @@ export class AddComponent implements OnInit {
 
   ngOnInit() {
     this.logged_user = this._service.currentUser.name;
-    console.log("this.logged_user", this.logged_user);
+    // console.log("this.logged_user", this.logged_user);
   }
 
   createPlan() {

@@ -13,12 +13,13 @@ export class HttpService {
 
   loginstatus: BehaviorSubject<any[]> = new BehaviorSubject([]);
   checkLogin: BehaviorSubject<any[]> = new BehaviorSubject([]);
-
+  update_group_completed: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  
   constructor(private _http: Http) {
     
     if (localStorage.currentUser !== undefined){
       this.currentUser = JSON.parse(localStorage.currentUser);
-      console.log("service's constructor", this.currentUser);
+      // 
       const data = [{
         user: this.currentUser,
         mesg: null
@@ -60,7 +61,7 @@ export class HttpService {
   login(userdata){
     return this._http.post('/login', userdata)
     .map((user) => {
-      console.log('user: ', user.json());
+      // 
       if(user.json().error === undefined){
         this.currentUser = user.json();
         localStorage.currentUser = JSON.stringify(user.json());
@@ -70,7 +71,7 @@ export class HttpService {
         }];
         this.updateLoginStatus(data);
       }else{
-        console.log('error from login service: ', user.json());
+        
       }
       return user.json();
 
@@ -83,6 +84,20 @@ export class HttpService {
 
   getPlans() {
     return this._http.get("/plans")
+    .map(data => data.json())
+  }
+
+  getTotalUsers() {
+    return this._http.get("/totalusers")
+    .map(data => data.json())
+  }
+
+  updateGroupCompleted(data) {
+    this.update_group_completed.next(data);
+  }
+
+  getCurrentUser(id) {
+    return this._http.get("/theuser/" + id)
     .map(data => data.json())
   }
 

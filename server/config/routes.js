@@ -29,6 +29,14 @@ module.exports = function(app){
         users.getPlans(req, res);
     })
 
+    app.get("/totalusers", function(req, res){
+        users.getTotalUsers(req, res);
+    })
+
+    app.get("/theuser/:userid", function(req, res){
+        users.getCurrentUser(req, res);
+    })
+
     app.all("*", (req, res, next) => {
         res.sendFile(path.resolve("./client/dist/index.html"))
     });

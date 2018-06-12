@@ -11,6 +11,7 @@ import { RegisComponent } from './regis/regis.component';
 import { CheckEmailComponent } from './check-email/check-email.component';
 import { RegPendingComponent } from './reg-pending/reg-pending.component';
 import { UserdataComponent } from './userdata/userdata.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '',component: NavbarComponent },

@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
-    $("button").click(function() {
+    $("#learn_more").click(function() {
       $('html,body').animate({
           scrollTop: $("#showAllPlans").offset().top},
           'slow');

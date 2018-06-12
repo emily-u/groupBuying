@@ -27,16 +27,15 @@ export class ShowComponent implements OnInit {
     this._service.getPlans()
     .subscribe(
       (planList)=>{ 
-        console.log('planList: ', planList[0]);
+        // console.log('planList: ', planList[0]);
         this.planList = planList },
-      (err)=>{ console.log(err); },
-      ()=>{  }
+      (err)=>{ console.log(err); }
       );
 
       if (this._service.currentUser !== null) {
         // console.log('this._service.currentUser: ', this._service.currentUser);
         this.logged_user_id = this._service.currentUser._id;
-        console.log("logged_user_id", this.logged_user_id);
+        // console.log("logged_user_id", this.logged_user_id);
       }
   }
 
@@ -47,6 +46,14 @@ export class ShowComponent implements OnInit {
       (data)=>{ 
         if(data){
           console.log(data);
+          this._service.updateGroupCompleted(["update group"]);
+          this._service.getPlans()
+          .subscribe(
+            (planList)=>{ 
+              // console.log('planList: ', planList[0]);
+              this.planList = planList },
+            (err)=>{ console.log(err); }
+            );
         }
        },
       (err)=>{ this.error_message.joinPlan = err.error },

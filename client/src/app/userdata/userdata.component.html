@@ -2,13 +2,13 @@
   <nav class="main-nav">
     <ul>
       <li>
-        <a href="/admin">Home</a>
+        <a [routerLink]="['/']">Home Page</a>
       </li>
       <li>
-        <a href="/admin" id="admin-nav-data">Data</a>
+        <a id="admin-nav-data">Data</a>
       </li>
       <li>
-        <a href="/admin" id="admin-nav-chart">Data Analysis</a>
+        <a id="admin-nav-chart">Data Analysis</a>
       </li>
       <li>
         <a [routerLink]="['/login']" *ngIf="logged_user === undefined">Login</a>
@@ -18,57 +18,67 @@
   </nav>
 
   <section class="top-container" id="admin-data">
-    <header class="showcase" >
+    <header class="showcase">
       <h1>Join someone's family plan</h1>
       <h1>Save money!</h1>
     </header>
-    
+
     <div class="top-box top-box-a">
-        <h1><span class="price">19</span>plans pending</h1>
+      <h1>{{plans_created_by_user}}</h1>
+      <h3>plans created by you</h3>
+      <!-- <h1>
+        <span class="price"></span>users</h1>
+      <h3>join plans this week</h3> -->
     </div>
     <div class="top-box top-box-b">
-        <h1><span class="price">19</span>online users</h1>
-      <h1><span class="price">12</span>users</h1>
-      <h3>join plans this week</h3>
-      <h1><span class="price">129</span>users</h1>
+      <!-- <h1><span class="price"></span>online users</h1> -->
+
+      <h1>
+        <span class="price">{{user_joined_plan}}</span>users</h1>
       <h3>join plans total</h3>
     </div>
   </section>
 
   <section class="boxes">
-        <div class="box">
-          <h1><span class="price">20</span></h1>
-          <h1>groups completed</h1>
-          </div>
-
-          <div class="box">
-              <h1><span class="price">112</span></h1>
-              <h1>plans total</h1>
-            </div>
-
     <div class="box">
-      <h1><span class="price">12</span></h1>
-      <h1>new users this week</h1>
+      <h1>
+        <span class="price">{{completed_groups}}</span>
+      </h1>
+      <h1>groups completed</h1>
     </div>
 
     <div class="box">
-        <h1><span class="price">132</span></h1>
-        <h1>users total</h1>
-      </div>
+      <h1>
+        <span class="price">{{planList_length}}</span>
+      </h1>
+      <h1>plans total</h1>
+    </div>
 
-      
+    <!-- <div class="box">
+      <h1>
+        <span class="price"></span>
+      </h1>
+      <h1>new users this week</h1>
+    </div> -->
+
+    <div class="box">
+      <h1>
+        <span class="price">{{totalUsers_length}}</span>
+      </h1>
+      <h1>users total</h1>
+    </div>
   </section>
 
   <section class="info" id="admin-chart">
-      <div id="piechart"></div>
-    </section>
+    <div id="piechart"></div>
+  </section>
 
   <section class="info">
     <!-- <div id="piechart"></div> -->
     <div id="chart_div"></div>
     <br/>
   </section>
-
+  <app-show></app-show>
   <footer>
     <p>Emily's project &copy; 2018</p>
   </footer>
@@ -79,68 +89,68 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+  // Load google charts
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
 
-// Draw the chart and set the chart values
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['T-mobile', 2],
-  ['Cricket', 2],
-  ['AT&T', 4],
-  ['Metropcs', 2],
-  ['Sprint', 8],
-  ['Verizon', 8],
-]);
+  // Draw the chart and set the chart values
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['T-mobile', 2],
+      ['Cricket', 2],
+      ['AT&T', 4],
+      ['Metropcs', 2],
+      ['Sprint', 8],
+      ['Verizon', 8],
+    ]);
 
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'GroupPackages Wireless Carriers Market Share', 'width':1200, 'height':400};
+    // Optional; add a title and set the width and height of the chart
+    var options = { 'title': 'GroupPackages Wireless Carriers Market Share', 'width': 1200, 'height': 400 };
 
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+  }
 </script>
 
 <!-- column chart -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-  google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawChart);
+  google.charts.load('current', { 'packages': ['bar'] });
+  google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Month', 'T-mobile', 'Criket', 'AT&T', 'Metropcs', 'Sprint', 'AT&T', 'Verizon'],
-        ['Jan', 10, 40, 20, 56, 52, 45, 36],
-        ['Feb', 7, 46, 25, 36, 42, 49, 35],
-        ['Mar', 6, 10, 30, 56, 52, 45, 36],
-        ['Apr', 10, 50, 30, 56, 52, 45, 36],
-        ['May', 10, 40, 20, 56, 52, 45, 36],
-        ['June', 70, 60, 25, 36, 52, 55, 56],
-        ['July', 0, 20, 30, 56, 42, 75, 50],
-        ['Aug', 10, 50, 30, 56, 52, 45, 36],
-        ['Sep', 8, 54, 35, 36, 42, 49, 35],
-        ['Oct', 10, 40, 20, 56, 52, 45, 36],
-        ['Nov', 6, 46, 25, 36, 42, 49, 35],
-        ['Dec', 6, 10, 30, 56, 52, 45, 36],
-      ]);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Month', 'T-mobile', 'Criket', 'AT&T', 'Metropcs', 'Sprint', 'AT&T', 'Verizon'],
+      ['Jan', 10, 40, 20, 56, 52, 45, 36],
+      ['Feb', 7, 46, 25, 36, 42, 49, 35],
+      ['Mar', 6, 10, 30, 56, 52, 45, 36],
+      ['Apr', 10, 50, 30, 56, 52, 45, 36],
+      ['May', 10, 40, 20, 56, 52, 45, 36],
+      ['June', 70, 60, 25, 36, 52, 55, 56],
+      ['July', 0, 20, 30, 56, 42, 75, 50],
+      ['Aug', 10, 50, 30, 56, 52, 45, 36],
+      ['Sep', 8, 54, 35, 36, 42, 49, 35],
+      ['Oct', 10, 40, 20, 56, 52, 45, 36],
+      ['Nov', 6, 46, 25, 36, 42, 49, 35],
+      ['Dec', 6, 10, 30, 56, 52, 45, 36],
+    ]);
 
-      var options = {
-        chart: {
-          title: 'Market Share of Wireless Carriers, each month',
-          // subtitle: '',
-        },
-        bars: 'vertical',
-        vAxis: {format: 'decimal'},
-        width:1200,
-        height: 400,
-        colors: ['#1b9e77', '#d95f02', '#7570b3', '#1b9e77', '#d95f02', '#7570b3','#1b9e77']
-      };
+    var options = {
+      chart: {
+        title: 'Market Share of Wireless Carriers, each month',
+        // subtitle: '',
+      },
+      bars: 'vertical',
+      vAxis: { format: 'decimal' },
+      width: 1200,
+      height: 400,
+      colors: ['#1b9e77', '#d95f02', '#7570b3', '#1b9e77', '#d95f02', '#7570b3', '#1b9e77']
+    };
 
-      var chart = new google.charts.Bar(document.getElementById('chart_div'));
+    var chart = new google.charts.Bar(document.getElementById('chart_div'));
 
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
 </script>

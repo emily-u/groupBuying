@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 const UserInfo = mongoose.model("UserInfo");
 const Plan = mongoose.model("Plan");
-const Group = mongoose.model("Group");
+// const Group = mongoose.model("Group");
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -12,7 +12,6 @@ const jwt = require('jsonwebtoken');
 const secret = 'groupBuying';
 
 module.exports = {
-
   // attach methods to our object literal
   register: (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -125,7 +124,7 @@ module.exports = {
 
   createPlan:(req, res) => {
     User.findOne({_id: req.params.id }, (err, user) => {
-      console.log("createPlan in users",req.params.id);
+      // console.log("createPlan in users",req.params.id);
       let newplan = new Plan({
         company: req.body.company,
         costPerMonth: req.body.costPerMonth,
@@ -134,12 +133,21 @@ module.exports = {
         description: req.body.description,
       });
       newplan.createdBy = user._id;
+      newplan.joinedBy = user._id;
       newplan.save((err) => {
         if(err){
           console.log(err);
           res.json('can not save user');
         }else{
-          res.json({success: "success"});
+          user.created_plan.push(newplan._id);
+          user.save((err) => {
+            if(err) {
+              console.log('err: ', err);
+            }
+            else {
+              res.json({success: "success created plan"});
+            }
+          })
         }
       })
     })
@@ -147,6 +155,7 @@ module.exports = {
   
   joinPlan:(req, res) => {
     User.findOne({_id: req.params.user_id }, (err, user) => {
+
       // console.log("joinPlan in users",req.params.id);
       Plan.findOne({_id: req.params.plan_id}, (err, plan)=>{
         // console.log(plan); 
@@ -154,16 +163,28 @@ module.exports = {
           console.log(err);
           res.json('can not save user');
         }else{
-          plan.joinedBy = user._id;
+          if(plan.joinedBy.length < plan.line){
+            plan.joinedBy.push(user._id);
+          }
+          if(plan.joinedBy.length == plan.line){
+            plan.completed = true;
+          }
           plan.save((err) => {
             if(err){
               console.log(err);
               res.json('can not save user to plan');
             }else{
-              res.json({success: "success save plan"});
+              user.joined_plan.push(plan._id);
+              user.save((err) => {
+                if(err) {
+                  console.log('err: ', err);
+                }
+                else {
+                  res.json({success: "success save plan and user"});
+                }
+              })
             }
           })
-          // res.json({success: "success"});
         }
       })    
     })
@@ -174,16 +195,33 @@ module.exports = {
       if(err){
         res.json({message:"error"});
       }else{
-        console.log(results);
+        // console.log(results);
         // if plan.line > plan.joinedBy
         res.json(results);
       }
     })
-
   },
 
-  // blank method
+  getTotalUsers:(req, res) => {
+    User.find({}, function(err, results){
+      if(err){
+        res.json({message:"error"});
+      }else{
+        res.json(results);
+      }
+    })
+  },
+
+  getCurrentUser:(req, res) => {
+    User.findOne({_id: req.params.userid }, (err, user) => {
+      if(err){
+        res.json({message:"error"});
+      }else{
+        res.json(user);
+      }
+    })
+  },
+
   all: function (req, res) {
-    // functionality goes here
   }
 }

@@ -42,7 +42,7 @@ export class RegPendingComponent implements OnInit {
     .subscribe(
       (data) => { 
         if(data){
-          console.log(data);
+          // console.log(data);
           this._service.checkLogin.next(['loged']);
           this._router.navigate(['/'])
         } 

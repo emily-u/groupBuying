@@ -46,7 +46,7 @@ function addDummyAccounts(dummyUsers) {
 	});
 }
 
-User.findOne({ email: 'omar.ihmoda@gmail.com' }, (error, result) => {
+User.findOne({ email: 'yuuamelie@gmail.com' }, (error, result) => {
 	if (error) {
 		console.log("In mongoose file with error on find user email method:", error);
 	} else if (!result) {

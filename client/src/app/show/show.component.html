@@ -5,42 +5,29 @@
         <button class="btn">Price Low to High</button>
         <button class="btn">Popularity</button>
     </div>
-    <!-- <div class="box" *ngFor="let t of plans">
-    <h1 class="sort">{{t.company}}</h1>
-    <h4 class="sort price">${{t.costPerMonth}}/mo</h4>
-    <div class="sort">
-      <i class="fas fa-user-check fa-2x"></i>
-      <i class="fas fa-user-check fa-2x"></i>
-      <i class="far fa-user fa-2x"></i>
-      <i class="far fa-user fa-2x"></i>
-      <i class="far fa-user fa-2x"></i>
-    </div>
-    <h4 class="sort">{{t.description}}</h4>
-    <a href="" class="sort btn">Join Now</a>
-  </div> -->
 
-    <div class="box" *ngFor="let t of planList">
-        <div class="planForm">
-            <div class="planDetail">
-                <h2 class="sort">{{t.company}}</h2>
+    <div class="boxes" *ngFor="let t of planList">
+        <!-- <div class="planForm"> -->
+            <div class="box">
+                <h2>{{t.company}}</h2>
             </div>
-            <div class="planDetail">
-                <h4 class="sort price">${{t.costPerMonth}}/mo</h4>
+            <div class="box">
+                <h4 class="price">${{t.costPerMonth}}/mo</h4>
             </div>
-            <div class="planDetail">
-                <div class="sort"></div>
+            <div class="box">
+                <h4>{{t.joinedBy.length}} out of {{t.line}} users joined</h4>
             </div>
-            <div class="planDetail">
-                <h4 class="sort">{{t.description}}</h4>
+            <div class="box">
+                <h4>{{t.description}}</h4>
             </div>
-            <div class="planDetail">
-                <button class="sort joinbtn" *ngIf="logged_user_id === t.createdBy">Created and joined</button>
-                <button class="sort joinbtn" *ngIf="logged_user_id !== t.createdBy && t.joinedBy===logged_user_id" (click)="joinPlan(t._id)">Join Now</button>
-                <button class="sort joinbtn" *ngIf="t.joinedBy==logged_user_id">Joined</button>
-                <button class="sort joinbtn" *ngIf="logged_user_id===undefined">Login and Join </button>
-                <!-- <button class="sort joinbtn" *ngIf="t.line>t.joinBy.length" >Activated</button> -->
+            <div class="box">
+                <button class="joinbtn" *ngIf="logged_user_id === t.createdBy">Created and joined</button>
+                <button class="joinbtn" *ngIf="logged_user_id !== t.createdBy && t.joinedBy.indexOf(logged_user_id) === -1 && t.completed === false" (click)="joinPlan(t._id)">Join Now</button>
+                <button class="joinbtn" *ngIf="t.joinedBy.indexOf(logged_user_id) > -1 && logged_user_id !== t.createdBy">Joined</button>
+                <button class="joinbtn" *ngIf="logged_user_id === undefined" [routerLink]="['/login']">Login and Join </button>
+                <button class="joinbtn" *ngIf="logged_user_id !== t.createdBy &&  t.joinedBy.indexOf(logged_user_id) === -1 && t.completed === true">Completed</button>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 
 </section>

@@ -53,3 +53,14 @@ footer {
     text-align: center;
     padding: 1rem;
 }
+
+.userDetail{
+    text-align: right;
+}
+
+
+@media(max-width: 700px) {
+    .main-nav ul {
+        grid-template-columns: 1fr;
+    }
+}

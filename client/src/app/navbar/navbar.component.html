@@ -1,14 +1,55 @@
 <div class="wrapper">
+  <div class="userDetail" *ngIf="logged_user !== undefined">
+    <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Hi {{logged_user}}</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">User name:</label>
+            <input type="text" class="form-control" value={{logged_user}} disabled="true">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Your Email:</label>
+            <input type="text" class="form-control" value={{user_log.email}} disabled="true">
+          </div>
+          <div class="form-group" *ngIf="user_log.isAdmin === true">
+            <label for="message-text" class="col-form-label">Your status:</label>
+            <input type="text" class="form-control" value="Admin" disabled="true">
+          </div>
+          <div class="form-group" *ngIf="user_log.isAdmin === true">
+            <label for="message-text" class="col-form-label">Plans you joined:</label>
+            <input type="text" class="form-control" value={{user_log.joined_plan.length}} disabled="true">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <nav class="main-nav">
     <ul>
       <li>
-        <a href="#">Home</a>
+        <a [routerLink]="['/']" *ngIf="user_isAdmin == false && logged_user !== undefined">Home Page</a>
+        <a [routerLink]="['/admin']" *ngIf="user_isAdmin == true && logged_user !== undefined">Admin Page</a>
+        <a [routerLink]="['/admin']" *ngIf="logged_user === undefined">Home</a>
       </li>
       <li>
-        <a href="#" id="nav-about">About</a>
+        <a id="nav-about">About</a>
       </li>
       <li>
-        <a href="#" id="nav-plans">Plans</a>
+        <a id="nav-plans">Plans</a>
       </li>
       <li>
         <a [routerLink]="['/add']" *ngIf="logged_user !== undefined">Create</a>
@@ -16,15 +57,15 @@
       </li>
       <li>
         <a [routerLink]="['/login']" *ngIf="logged_user === undefined">Login</a>
-        <a href="#" *ngIf="logged_user !== undefined" (click)="logout()">Logout</a>
+        <a *ngIf="logged_user !== undefined" (click)="logout()">Logout</a>
       </li>
     </ul>
   </nav>
 
 
-<app-home></app-home>
-<app-show></app-show>
-<footer>
-  <p>Emily's project &copy; 2018</p>
-</footer>
+  <app-home></app-home>
+  <app-show></app-show>
+  <footer>
+    <p>Emily's project &copy; 2018</p>
+  </footer>
 </div>

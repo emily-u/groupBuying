@@ -12,20 +12,26 @@ declare var $: any;
 })
 export class UserdataComponent implements OnInit {
   logged_user;
+  logged_user_id;
   user_log = {
     email: '',
-    password: ''
+    password: '',
   };
+  planList_length;
+  totalUsers_length;
+  completed_groups = 0;
+  user_joined_plan = 0;
+  plans_created_by_user;
 
   constructor(private _service: HttpService, private _router: Router) { }
 
   ngOnInit() {
+    // console.log(this._service.currentUser);
     if (this._service.currentUser !== null) {
-      // console.log('this._service.currentUser: ', this._service.currentUser);
       this.logged_user = this._service.currentUser.name;
       this.user_log.email = this._service.currentUser.email;
       this.user_log.password = this._service.currentUser.password;
-      // console.log('THIS.USER_LOG.EMAIL: ', this.user_log.email);
+      this.logged_user_id = this._service.currentUser._id;
     }
 
     $("#admin-nav-data").click(function() {
@@ -39,9 +45,75 @@ export class UserdataComponent implements OnInit {
           scrollTop: $("#admin-chart").offset().top},
           'slow');
   });
+
+  this._service.getPlans()
+  .subscribe(
+    (planList)=>{
+      this.planList_length = planList.length;
+      // console.log("7",planList);
+      let count1 = 0;
+      for(var i = 0; i<planList.length; i++){
+        if(planList[i].completed == true){
+          count1 += 1;
+          // console.log("plan completed: ", this.completed_groups);
+        }
+        this.completed_groups = count1;
+        if(planList[i].joinedBy){
+          this.user_joined_plan += planList[i].joinedBy.length;
+          // console.log("this.user_joined_plan",this.user_joined_plan);
+        }
+      }
+      
+    },
+    (err)=>{ console.log(err); }
+  )
+
+  this._service.update_group_completed.subscribe((res) => {
+    // console.log(res);
+    this._service.getPlans()
+    .subscribe(
+      (planList)=>{
+        this.planList_length = planList.length;
+        // console.log("7",planList);
+        let count = 0;
+        for(var i = 0; i<planList.length; i++){
+          if(planList[i].completed == true){
+            count += 1;
+            // console.log("plan completed: ", this.completed_groups);
+          }
+          this.completed_groups = count;
+          if(planList[i].joinedBy){
+            this.user_joined_plan += planList[i].joinedBy.length;
+            // console.log("this.user_joined_plan",this.user_joined_plan);
+          }
+        }
+        
+      },
+      (err)=>{ console.log(err); }
+    )
+  })
+
+  this._service.getTotalUsers()
+  .subscribe(
+    (totalUsers)=>{
+      this.totalUsers_length = totalUsers.length;
+      // console.log("3434",totalUsers);
+    },
+    (err)=>{ console.log(err); }
+  )
+
+  this._service.getCurrentUser(this.logged_user_id)
+  .subscribe(
+    (currentUser)=>{
+      // console.log("2567", currentUser);
+      this.plans_created_by_user = currentUser.created_plan.length;
+    },
+    (err)=>{console.log(err);}
+  )
+
   }
+
   logout(){
-    // console.log("logout button pressed", this.logged_user);
     this._service.logout();
     this.logged_user = undefined;
     const data = [{
