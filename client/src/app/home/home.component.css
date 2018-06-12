@@ -5,6 +5,11 @@
     --shadow: 0 1px 5px rgba(104,104,104,0.8);
 }
 
+.wrapper {
+    display: grid;
+    grid-gap: 20px;
+}
+
 .top-container {
     display: grid;
     grid-gap: 20px;
@@ -69,7 +74,7 @@ img {
 
 .boxes {
     display: grid;
-    /* grid-gap: 20px; */
+    grid-gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
