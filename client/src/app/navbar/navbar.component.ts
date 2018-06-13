@@ -17,6 +17,9 @@ export class NavbarComponent implements OnInit {
     email: '',
     password: ''
   };
+  theUser;
+  theUser_id;
+  plans_user_joined;
 
   constructor(private _service: HttpService, private _router: Router) { }
 
@@ -29,8 +32,7 @@ export class NavbarComponent implements OnInit {
       this.user_log.email = this._service.currentUser.email;
       this.user_log.password = this._service.currentUser.password;
       this.user_log = this._service.currentUser;
-      // console.log('1121', this.user_log);
-      
+      this.theUser_id = this._service.currentUser._id;
     }
 
     $("#nav-about").click(function() {
@@ -44,6 +46,15 @@ export class NavbarComponent implements OnInit {
           scrollTop: $("#showAllPlans").offset().top},
           'slow');
   });
+
+  this._service.getCurrentUser(this.theUser_id)
+  .subscribe(
+    (user)=>{
+      this.theUser = user;
+      this.plans_user_joined = user.joined_plan.length;
+    },
+    (err)=>{console.log(err);}
+  )
   }
 
   logout(){

@@ -21,7 +21,7 @@
         </div>
         <div class="box">
             <button class="joinbtn" *ngIf="logged_user_id === t.createdBy">Created and joined</button>
-            <button class="joinbtn" *ngIf="logged_user_id !== t.createdBy && t.joinedBy.indexOf(logged_user_id) === -1 && t.completed === false"
+            <button class="joinbtn" *ngIf="logged_user_id !== undefined && logged_user_id !== t.createdBy && t.joinedBy.indexOf(logged_user_id) === -1 && t.completed === false"
                 (click)="joinPlan(t._id)">Join Now</button>
             <button class="joinbtn" *ngIf="t.joinedBy.indexOf(logged_user_id) > -1 && logged_user_id !== t.createdBy">Joined</button>
             <button class="joinbtn" *ngIf="logged_user_id === undefined" [routerLink]="['/login']">Login and Join </button>

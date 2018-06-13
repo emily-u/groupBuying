@@ -28,7 +28,7 @@ const userInfo = mongoose.model('UserInfo');
 function addAccount(user) {
 	bcrypt.hash(user.password, saltRounds).then((hash) => {
 		User.create({
-			name: "super admin",
+			name: "Emily Yu",
 			email: user.email,
 			isAdmin: true,
 			activated: true
@@ -46,7 +46,7 @@ function addDummyAccounts(dummyUsers) {
 	});
 }
 
-User.findOne({ email: 'yuuamelie@gmail.com' }, (error, result) => {
+User.findOne({ email: 'emilyyuproject@gmail.com' }, (error, result) => {
 	if (error) {
 		console.log("In mongoose file with error on find user email method:", error);
 	} else if (!result) {
