@@ -50,10 +50,10 @@ module.exports = {
                   });
 
                   var content = `
-                    <h2>Hello ${new_user.name},</h2>
-                    <p>You have opened a new account in group buying. </p><br>
-                    <a href="http://localhost:8000/activate/${new_user.token}">Please activate your account here: Activate</a>
-                    <h3>GroupBuying team</h3>
+                    <p>Hello ${new_user.name},</p>
+                    <p>You have opened a new account in group buying. </p>
+                    <a href="http://localhost:8000/activate/${new_user.token}">Please click here to activate your account</a>
+                    <p>GroupBuying team</p>
                     `
                   var mailOptions = {
                     from: 'emilyyuproject@gmail.com',
